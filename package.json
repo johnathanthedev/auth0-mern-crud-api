@@ -1,0 +1,19 @@
+{
+  "name": "auth0-mern-crud-api",
+  "version": "1.0.0",
+  "description": "A CRUD app using Auth0's auth service.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnathanthedev/auth0-mern-crud-api.git"
+  },
+  "author": "Johnathan Guzman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johnathanthedev/auth0-mern-crud-api/issues"
+  },
+  "homepage": "https://github.com/johnathanthedev/auth0-mern-crud-api#readme"
+}
