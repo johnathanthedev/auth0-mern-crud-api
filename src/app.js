@@ -11,7 +11,8 @@ app.use(cors())
 connectDB()
 
 app.use("/todos", require("./api/controllers/todos"))
-app.use("/api", require("./api/controllers/api"))
+app.use("/token-service", require("./api/controllers/token"))
+app.use("/admin", require("./api/controllers/admin"))
 
 app.listen(PORT, () => {
     console.log(`Express server running on port ${PORT}`)

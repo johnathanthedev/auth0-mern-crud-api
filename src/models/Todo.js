@@ -6,6 +6,9 @@ const TodoSchema = mongoose.Schema({
     },
     description: {
         type: String
+    },
+    user_email: {
+        type: String
     }
 })
 

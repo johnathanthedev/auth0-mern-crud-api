@@ -1,20 +1,36 @@
 const Todo = require("../models/Todo")
 
 class TodoService {
-    getTodos = async () => {
+    getTodos = async (user_email) => {
         try {
-            const todos = await Todo.find()
+            const todos = await Todo.find({ user_email }).sort({ date: -1 })
+            const email_check = todos.some(todo => todo.user_email === user_email)
+            if (todos.length) {
+                if (!email_check) return { message: 'Not authorized' } 
+            } 
             return todos  
         } catch (error) {
             return error
         }
     }
 
-    createTodo = async (todo_name, todo_description) => {
+    getTodo = async (user_email, todo_id) => {
+        try {
+            const todo = await Todo.findById(todo_id)
+            const email_check = todo.user_email === user_email
+            if (!email_check) return { message: 'Not authorized' }
+            return todo
+        } catch (error) {
+            return error
+        } 
+    }
+
+    createTodo = async (todo_name, todo_description, user_email) => {
         try {
             const new_todo = new Todo({
                 name: todo_name, 
-                description: todo_description
+                description: todo_description,
+                user_email
             })
             const todo = await new_todo.save()
             return todo
@@ -23,7 +39,7 @@ class TodoService {
         }    
     }
 
-    updateTodo = async (todo_id, todo_name, todo_description) => {
+    updateTodo = async (todo_id, todo_name, todo_description, req_email) => {
         const todo_fields = {}
         if (todo_id) todo_fields.id = todo_id
         if (todo_name) todo_fields.name = todo_name
@@ -31,9 +47,8 @@ class TodoService {
 
         try {
             let todo = await Todo.findById(todo_id)
-            !todo && res.status(404).json({
-                message: "Todo not found."
-            })
+            if (!todo) return { message: "Todo not found." }
+            if (todo.user_email !== req_email) return { message: 'Not authorized' }
             todo = await Todo.findByIdAndUpdate(
                 todo_id, 
                 { $set: todo_fields },
@@ -45,15 +60,13 @@ class TodoService {
         }
     }
 
-    deleteTodo = async (todo_id) => {
+    deleteTodo = async (todo_id, req_email) => {
         try {
             let todo = await Todo.findById(todo_id)
-            !todo && res.status(404).json({
-                message: "Todo not found."
-            })
+            if (!todo) return { message: "Todo not found." }
+            if (todo.user_email !== req_email) return { message: 'Not authorized' }
             await Todo.findByIdAndRemove(todo_id)
-            const message = { message: "Todo removed" }
-            return message
+            return { message: "Todo removed" }
         } catch (error) {
             return error
         }
