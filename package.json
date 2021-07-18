@@ -2,9 +2,9 @@
   "name": "auth0-mern-crud-api",
   "version": "1.0.0",
   "description": "A CRUD app using Auth0's auth service.",
-  "main": "server.js",
+  "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "nodemon src/app.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,18 @@
   "bugs": {
     "url": "https://github.com/johnathanthedev/auth0-mern-crud-api/issues"
   },
-  "homepage": "https://github.com/johnathanthedev/auth0-mern-crud-api#readme"
+  "homepage": "https://github.com/johnathanthedev/auth0-mern-crud-api#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
+    "express-jwt-authz": "^2.4.1",
+    "jsonwebtoken": "^8.5.1",
+    "jwks-rsa": "^2.0.3",
+    "mongoose": "^5.13.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
 }
